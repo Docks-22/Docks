@@ -9,11 +9,26 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var DeviceManager = DocksDevice()
+    @StateObject var Chat = DocksChat()
     @State private var chatInput : String = ""
     @FocusState private var chatFocused: Bool
     
     var chatWindow : some View {
-        Text("hello!")
+        List {
+            ForEach(Chat.messages.reversed()) { message in
+                Text(message.contents)
+                    .padding(5)
+                    .padding(.leading, 5)
+                    .padding(.trailing, 5)
+                    .background(message.my_message ? Color.blue : Color.secondary)
+                    .cornerRadius(10)
+                    .frame(maxWidth: .infinity, alignment: message.my_message ? .trailing : .leading)
+                    .rotationEffect(.radians(.pi))
+                    .scaleEffect(x: -1, y: 1, anchor: .center)
+            }
+        }
+        .rotationEffect(.radians(.pi))
+        .scaleEffect(x: -1, y: 1, anchor: .center)
     }
     
     var inputField : some View {
@@ -28,11 +43,20 @@ struct ContentView: View {
             }
             .disableAutocorrection(true)
             .textFieldStyle(.roundedBorder)
-            
+
             Button("Send") {
                 sendMessage()
             }
+        }.padding(10)
+    }
+        
+    func sendMessage() {
+        if (chatInput != "") {
+            Chat.sendMessage(contents: chatInput)
         }
+        
+        // reset chat input
+        chatInput = ""
     }
     
     var body: some View {
@@ -40,15 +64,6 @@ struct ContentView: View {
             chatWindow
             inputField
         }
-        .padding()
-    }
-    
-    func sendMessage() {
-        // TODO: send message
-        print(chatInput)
-        
-        // reset chat input
-        chatInput = ""
     }
 }
 
