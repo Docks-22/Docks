@@ -9,6 +9,9 @@ import Foundation
 import CoreBluetooth
 import os
 
+
+let chatServiceID = CBUUID(string: "8F383A98-E5B4-44F2-BDC4-E9A41A79D9DF")
+
 class DocksDevice : NSObject, ObservableObject {
 //    private(set) public let devices = [Device]()
     private let centralManager: CBCentralManager
@@ -92,6 +95,9 @@ extension DocksDevice : CBCentralManagerDelegate {
         var name = peripheral.identifier
         log.info("connected to \(name)")
         
+        // Scan for peripheral's characteristics
+        peripheral.discoverServices([chatServiceID])
+        
     }
 }
 
@@ -104,12 +110,35 @@ extension DocksDevice : CBPeripheralManagerDelegate {
         }
         
         // Create a characteristic that will allow us to send information
-//        peripheralCharacteric = CBMutableCharacteristic(type: CBUUID(string: "f0ab5a15-b003-4653-a248-73fd504c128f"))
+        peripheralCharacteristic = CBMutableCharacteristic(type: CBUUID(string: "f0ab5a15-b003-4653-a248-73fd504c128f"),
+                                                           properties: [.write, .notify],
+                                                           value: nil,
+                                                           permissions: .writeable)
         
+        // Create the service to broadcast
+        let service = CBMutableService(type: CBUUID(string: "8F383A98-E5B4-44F2-BDC4-E9A41A79D9DF"), primary: true)
+        service.characteristics = [self.peripheralCharacteristic!]
         
+        // Register the service to this peripheral
+        peripheralManager.add(service)
         
         log.info("Starting to advertise as peripheral")
         peripheralManager.startAdvertising([CBAdvertisementDataServiceUUIDsKey:[CBUUID(string: "8F383A98-E5B4-44F2-BDC4-E9A41A79D9DF")],
                                             CBAdvertisementDataLocalNameKey: id])
+    }
+}
+
+extension DocksDevice: CBPeripheralDelegate {
+    // todo: cleanup
+    
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
+        if let error = error {
+            log.error("Unable to discover service: \(error.localizedDescription)")
+            return
+        }
+        
+        peripheral.services?.forEach { service in
+            log.info("Found service \(service.uuid)")
+        }
     }
 }
