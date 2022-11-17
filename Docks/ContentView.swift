@@ -2,21 +2,53 @@
 //  ContentView.swift
 //  Docks
 //
-//  Created by david on 11/16/22.
+//  Created by david on 11/3/22.
 //
 
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var DeviceManager = Device()
+    @StateObject var DeviceManager = DocksDevice()
+    @State private var chatInput : String = ""
+    @FocusState private var chatFocused: Bool
+    
+    var chatWindow : some View {
+        Text("hello!")
+    }
+    
+    var inputField : some View {
+        HStack {
+            TextField(
+                "",
+                text: $chatInput
+            )
+            .focused($chatFocused)
+            .onSubmit {
+                sendMessage()
+            }
+            .disableAutocorrection(true)
+            .textFieldStyle(.roundedBorder)
+            
+            Button("Send") {
+                sendMessage()
+            }
+        }
+    }
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            chatWindow
+            inputField
         }
         .padding()
+    }
+    
+    func sendMessage() {
+        // TODO: send message
+        print(chatInput)
+        
+        // reset chat input
+        chatInput = ""
     }
 }
 
