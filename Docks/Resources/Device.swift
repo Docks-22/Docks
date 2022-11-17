@@ -22,10 +22,16 @@ class DocksDevice : NSObject, ObservableObject {
     private var connectedPeripherals: [CBPeripheral]
     
     // Central variables
+    // TODO: make array
     private var centralCharacteristic: CBCharacteristic?
+    // reference to the peripheral we are connected to (if central)
+    private var peripheral: CBPeripheral?
     
     // Peripheral variables
+    // TODO: make array
     private var peripheralCharacteristic: CBMutableCharacteristic?
+    // reference to central we are connected to (if peripheral)
+    private var central: CBCentral?
     
     override init() {
         queue = DispatchQueue(label: "bluetooth-discovery",
@@ -41,12 +47,12 @@ class DocksDevice : NSObject, ObservableObject {
         
     }
     
-//    private func sendCentralData(_ data: Data) {
-//        for periph in connectedPeripherals {
-//
-//        }
-//
-//    }
+    public func send(msg: String) {
+        let msgData = msg.data(using: .utf8)!
+        guard let characteristic = self.peripheralCharacteristic,
+              let central = self.central else { return }
+        peripheralManager.updateValue(msgData, for: characteristic, onSubscribedCentrals: [central])
+    }
     
    
 }
@@ -95,6 +101,9 @@ extension DocksDevice : CBCentralManagerDelegate {
         var name = peripheral.identifier
         log.info("connected to \(name)")
         
+        // Configure a delegate for the peripheral
+        peripheral.delegate = self
+        
         // Scan for peripheral's characteristics
         peripheral.discoverServices([chatServiceID])
         
@@ -126,10 +135,14 @@ extension DocksDevice : CBPeripheralManagerDelegate {
         peripheralManager.startAdvertising([CBAdvertisementDataServiceUUIDsKey:[CBUUID(string: "8F383A98-E5B4-44F2-BDC4-E9A41A79D9DF")],
                                             CBAdvertisementDataLocalNameKey: id])
     }
+    
+    func peripheralManager(_ peripheral: CBPeripheralManager, central: CBCentral, didSubscribeTo characteristic: CBCharacteristic) {
+        self.central = central
+    }
 }
 
-extension DocksDevice: CBPeripheralDelegate {
-    // todo: cleanup
+extension DocksDevice : CBPeripheralDelegate {
+    // todo: cleanup()
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         if let error = error {
@@ -139,6 +152,35 @@ extension DocksDevice: CBPeripheralDelegate {
         
         peripheral.services?.forEach { service in
             log.info("Found service \(service.uuid)")
+            // TODO: may need to check for duplicate services/characteristics
+            peripheral.discoverCharacteristics(nil, for: service)
         }
     }
+    
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+        if let error = error {
+            log.error("Unable to discover characteristics: \(error.localizedDescription)")
+        }
+        
+        service.characteristics?.forEach { characteristic in
+            // subscribe to each characteristic
+            peripheral.setNotifyValue(true, for: characteristic)
+            
+            // Keep a reference to the characteristic for sending data
+            self.centralCharacteristic = characteristic
+        }
+    }
+    
+    // New data arrived in a characteristic we are subscribed to
+    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        if let error = error {
+            log.error("Unable to fetch updated characteristic: \(error.localizedDescription)")
+        }
+        
+        guard let data = characteristic.value else { return }
+        let msg = String(decoding: data, as: UTF8.self)
+        log.info("received message: \(msg)")
+        // TODO: callback?
+    }
+    
 }
