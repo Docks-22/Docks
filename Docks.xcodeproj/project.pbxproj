@@ -12,6 +12,7 @@
 		63BEBB742925B87A0057F77F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63BEBB732925B87A0057F77F /* Assets.xcassets */; };
 		63BEBB772925B87A0057F77F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63BEBB762925B87A0057F77F /* Preview Assets.xcassets */; };
 		63BEBB802925B8BA0057F77F /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BEBB7F2925B8BA0057F77F /* Device.swift */; };
+		63BEBB8B2925E9250057F77F /* DocksChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BEBB8A2925E9250057F77F /* DocksChat.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		63BEBB782925B87A0057F77F /* Docks.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Docks.entitlements; sourceTree = "<group>"; };
 		63BEBB7F2925B8BA0057F77F /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		63BEBB812925C01F0057F77F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		63BEBB8A2925E9250057F77F /* DocksChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocksChat.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +57,7 @@
 		63BEBB6E2925B87A0057F77F /* Docks */ = {
 			isa = PBXGroup;
 			children = (
+				63BEBB892925E90A0057F77F /* Chat */,
 				63BEBB812925C01F0057F77F /* Info.plist */,
 				63BEBB7E2925B8A80057F77F /* Resources */,
 				63BEBB6F2925B87A0057F77F /* DocksApp.swift */,
@@ -80,6 +83,14 @@
 				63BEBB7F2925B8BA0057F77F /* Device.swift */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		63BEBB892925E90A0057F77F /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				63BEBB8A2925E9250057F77F /* DocksChat.swift */,
+			);
+			path = Chat;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -154,6 +165,7 @@
 			files = (
 				63BEBB802925B8BA0057F77F /* Device.swift in Sources */,
 				63BEBB722925B87A0057F77F /* ContentView.swift in Sources */,
+				63BEBB8B2925E9250057F77F /* DocksChat.swift in Sources */,
 				63BEBB702925B87A0057F77F /* DocksApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
