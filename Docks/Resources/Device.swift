@@ -1,5 +1,5 @@
 //
-//  Device.swift
+//  DocksDevice.swift
 //  Docks
 //
 //  Created by david on 11/3/22.
@@ -9,7 +9,7 @@ import Foundation
 import CoreBluetooth
 import os
 
-class Device : NSObject, ObservableObject {
+class DocksDevice : NSObject, ObservableObject {
 //    private(set) public let devices = [Device]()
     private let centralManager: CBCentralManager
     private let peripheralManager: CBPeripheralManager
@@ -48,7 +48,7 @@ class Device : NSObject, ObservableObject {
    
 }
 
-extension Device : CBCentralManagerDelegate {
+extension DocksDevice : CBCentralManagerDelegate {
     // Called when the Bluetooth central state changes
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         guard central.state == .poweredOn else {
@@ -95,7 +95,7 @@ extension Device : CBCentralManagerDelegate {
     }
 }
 
-extension Device : CBPeripheralManagerDelegate {
+extension DocksDevice : CBPeripheralManagerDelegate {
     func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
         // if powered on, start advertising
         guard peripheral.state == .poweredOn else {
