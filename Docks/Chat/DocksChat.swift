@@ -34,7 +34,7 @@ struct NetworkChatMessage {
     }
     
     static func from_network_format(packet: String) -> NetworkChatMessage {
-        var tokens = packet.components(separatedBy: ",")
+        let tokens = packet.components(separatedBy: ",")
         return NetworkChatMessage(
                 contents: tokens[3...].joined(separator: ","),
                 nickname: tokens[2],
@@ -50,6 +50,7 @@ class DocksChat : NSObject, ObservableObject {
     var deviceManager : DocksDevice
     var myUUID : String
     var myNickname : String
+    var knownMessages : Set<String> = []
     
     override init() {
         deviceManager = DocksDevice()
@@ -61,14 +62,52 @@ class DocksChat : NSObject, ObservableObject {
         deviceManager.register_receive_callback(callback_fn: receiveMessage(networkMessage:))
     }
     
+    
+    /**
+     * Verifies that a nickname is alphanumeric and sets it accordingly. Returns true on success
+     */
+    func verifyAndSetNickname(nickname : String) -> Bool {
+        if (!nickname.isEmpty && nickname.range(of:"[a-zA-Z0-9]+") != nil) {
+            self.myNickname = nickname;
+            return true
+        }
+        
+        return false
+    }
+    
+    /**
+     *  Adds a message to the list of seen messages if it hasn't been seen before
+     *  @return whether the message was unseen
+     */
+    func addMessageIfUnseen(SenderUID: String, timestamp: TimeInterval) -> Bool {
+        let messageID = SenderUID + String(timestamp)
+        return knownMessages.insert(messageID).inserted
+    }
+    
     func sendMessage(contents : String) {
-        var networkMessage = NetworkChatMessage(contents: contents, nickname: myNickname, SenderUID: myUUID, timestamp: NSDate().timeIntervalSince1970)
+        let networkMessage = NetworkChatMessage(
+            contents: contents,
+            nickname: myNickname,
+            SenderUID: myUUID,
+            timestamp: NSDate().timeIntervalSince1970
+        )
         
         deviceManager.send(msg: networkMessage.to_network_format())
+        receiveMessage(networkMessage: networkMessage.to_network_format())
     }
     
     func receiveMessage(networkMessage: String) {
-        print(networkMessage)
+        let networkMessage = NetworkChatMessage.from_network_format(packet: networkMessage)
+        let uiMessage = UIChatMessage(
+            contents: networkMessage.contents,
+            nickname: networkMessage.nickname,
+            my_message: networkMessage.SenderUID == myUUID,
+            timestamp: NSDate(timeIntervalSince1970: networkMessage.timestamp)
+        )
+        
+        if (addMessageIfUnseen(SenderUID: networkMessage.SenderUID, timestamp: networkMessage.timestamp)) {
+            messages.append(uiMessage)
+        }
     }
     
 }

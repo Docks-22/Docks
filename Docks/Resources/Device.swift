@@ -49,10 +49,13 @@ class DocksDevice : NSObject, ObservableObject {
     }
     
     public func send(msg: String) {
+        log.info("Sending message \"\(msg)\"")
         let msgData = msg.data(using: .utf8)!
         guard let characteristic = self.peripheralCharacteristic,
-              let central = self.central else { return }
-        log.info("Sending message \"\(msgData)\"")
+              let central = self.central else {
+            log.info("No known peripherals, cancelling send")
+            return
+        }
         peripheralManager.updateValue(msgData, for: characteristic, onSubscribedCentrals: [central])
     }
     
