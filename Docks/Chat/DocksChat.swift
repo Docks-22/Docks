@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import os
     
 /**
   * Struct representing a message for UI display purposes
@@ -51,6 +52,7 @@ class DocksChat : NSObject, ObservableObject {
     var myUUID : String
     var myNickname : String
     var knownMessages : Set<String> = []
+    var log = Logger()
     
     override init() {
         deviceManager = DocksDevice()
@@ -67,7 +69,8 @@ class DocksChat : NSObject, ObservableObject {
      * Verifies that a nickname is alphanumeric and sets it accordingly. Returns true on success
      */
     func verifyAndSetNickname(nickname : String) -> Bool {
-        if (!nickname.isEmpty && nickname.range(of:"[a-zA-Z0-9]+") != nil) {
+        log.info("Attempting to change nickname to \"\(nickname)\"")
+        if (!nickname.isEmpty && nickname.range(of:"[a-zA-Z0-9]+", options: .regularExpression, range: nil, locale: nil) != nil) {
             self.myNickname = nickname;
             return true
         }
