@@ -7,29 +7,68 @@
 
 import Foundation
     
-struct Message : Identifiable {
+/**
+  * Struct representing a message for UI display purposes
+ */
+struct UIChatMessage : Identifiable {
     var contents : String
-    
+    var nickname : String // nickname that sent this
     // flag denoting that this message was sent by my user
     var my_message : Bool
+    var timestamp : NSDate
     var id: String {contents}
 }
 
+/**
+  * Struct representing a message for network transit
+ */
+struct NetworkChatMessage {
+    var contents : String
+    var nickname : String // nickname that sent this
+    // flag denoting that this message was sent by my user
+    var SenderUID : String
+    var timestamp: TimeInterval
+    
+    func to_network_format() -> String {
+        return [SenderUID, String(timestamp), nickname, contents].joined(separator: ",")
+    }
+    
+    static func from_network_format(packet: String) -> NetworkChatMessage {
+        var tokens = packet.components(separatedBy: ",")
+        return NetworkChatMessage(
+                contents: tokens[3...].joined(separator: ","),
+                nickname: tokens[2],
+                SenderUID: tokens[0],
+                timestamp: TimeInterval(tokens[1]) ?? TimeInterval(0)
+        )
+    }
+    
+}
 
 class DocksChat : NSObject, ObservableObject {
-    @Published var messages : [Message] = []
+    @Published var messages : [UIChatMessage] = []
     var deviceManager : DocksDevice
+    var myUUID : String
+    var myNickname : String
     
     override init() {
         deviceManager = DocksDevice()
+        myUUID = deviceManager.get_id()
+        // initial nickname will be my UUID
+        myNickname = myUUID
         super.init()
+        
+        deviceManager.register_receive_callback(callback_fn: receiveMessage(networkMessage:))
     }
     
     func sendMessage(contents : String) {
-        // TODO: link into library
-        deviceManager.send(msg: contents)
+        var networkMessage = NetworkChatMessage(contents: contents, nickname: myNickname, SenderUID: myUUID, timestamp: NSDate().timeIntervalSince1970)
         
-        messages.append(Message(contents: contents, my_message: true))
+        deviceManager.send(msg: networkMessage.to_network_format())
+    }
+    
+    func receiveMessage(networkMessage: String) {
+        print(networkMessage)
     }
     
 }

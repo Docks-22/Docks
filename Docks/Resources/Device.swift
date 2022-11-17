@@ -13,13 +13,13 @@ import os
 let chatServiceID = CBUUID(string: "8F383A98-E5B4-44F2-BDC4-E9A41A79D9DF")
 
 class DocksDevice : NSObject, ObservableObject {
-//    private(set) public let devices = [Device]()
     private let centralManager: CBCentralManager
     private let peripheralManager: CBPeripheralManager
     private let queue: DispatchQueue
-    private let id = Host.current().name ?? UUID().uuidString
+    private let id = UUID().uuidString
     private let log = Logger()
     private var connectedPeripherals: [CBPeripheral]
+    private var recv_callback : (String) -> Void
     
     // Central variables
     // TODO: make array
@@ -40,6 +40,7 @@ class DocksDevice : NSObject, ObservableObject {
         centralManager = CBCentralManager(delegate: nil, queue: queue)
         peripheralManager = CBPeripheralManager(delegate: nil, queue: queue)
         connectedPeripherals = []
+        recv_callback = { _ in return} // default callback is a no-op
         super.init()
         
         centralManager.delegate = self
@@ -51,9 +52,22 @@ class DocksDevice : NSObject, ObservableObject {
         let msgData = msg.data(using: .utf8)!
         guard let characteristic = self.peripheralCharacteristic,
               let central = self.central else { return }
+        log.info("Sending message \"\(msgData)\"")
         peripheralManager.updateValue(msgData, for: characteristic, onSubscribedCentrals: [central])
     }
     
+    // return my own UUIDString
+    public func get_id() -> String {
+        return id
+    }
+    
+    /**
+     * Register a function as a callback upon receiving
+     */
+    public func register_receive_callback(callback_fn: @escaping (String) -> Void) {
+        self.recv_callback = callback_fn
+        log.info("Registered new callback function on message receipt")
+    }
    
 }
 
@@ -94,7 +108,6 @@ extension DocksDevice : CBCentralManagerDelegate {
         
         // Add the connected peripheral to list of connected devices
         self.connectedPeripherals.append(peripheral)
-//        log.info("Detected peripheral with name \(name)")
     }
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
@@ -179,8 +192,9 @@ extension DocksDevice : CBPeripheralDelegate {
         
         guard let data = characteristic.value else { return }
         let msg = String(decoding: data, as: UTF8.self)
-        log.info("received message: \(msg)")
-        // TODO: callback?
+        log.info("Received message \"\(msg)\", calling callback function")
+        // call callback on msg
+        recv_callback(msg)
     }
     
 }
