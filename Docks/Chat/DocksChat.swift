@@ -70,7 +70,8 @@ class DocksChat : NSObject, ObservableObject {
      */
     func verifyAndSetNickname(nickname : String) -> Bool {
         log.info("Attempting to change nickname to \"\(nickname)\"")
-        if (!nickname.isEmpty && nickname.range(of:"[a-zA-Z0-9]+", options: .regularExpression, range: nil, locale: nil) != nil) {
+        if (!nickname.isEmpty && nickname.range(of:".*,.*", options: .regularExpression, range: nil, locale: nil) == nil) {
+            // do not allow commas
             self.myNickname = nickname;
             return true
         }
