@@ -110,6 +110,7 @@ class DocksChat : NSObject, ObservableObject {
         )
         
         if (addMessageIfUnseen(SenderUID: networkMessage.SenderUID, timestamp: networkMessage.timestamp)) {
+            deviceManager.send(msg: networkMessage.to_network_format())
             messages.append(uiMessage)
         }
     }

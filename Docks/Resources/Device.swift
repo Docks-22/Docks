@@ -49,14 +49,32 @@ class DocksDevice : NSObject, ObservableObject {
     }
     
     public func send(msg: String) {
-        log.info("Sending message \"\(msg)\"")
+        sendAsPeripheral(msg: msg)
+        sendAsCentral(msg: msg)
+    }
+    
+    public func sendAsCentral(msg: String) {
+        log.info("Sending message as central \"\(msg)\"")
         let msgData = msg.data(using: .utf8)!
-        guard let characteristic = self.peripheralCharacteristic,
+        guard let centralCharacteristic = self.centralCharacteristic,
+              let peripheral = self.peripheral else {
+            log.info("No known peripherals, cancelling send")
+            return
+        }
+        peripheral.writeValue(msgData, for: centralCharacteristic, type:.withResponse)
+        log.info("sent to peripheral: \(peripheral.identifier)")
+    }
+    
+    public func sendAsPeripheral(msg: String) {
+        log.info("Sending message as peripheral \"\(msg)\"")
+        let msgData = msg.data(using: .utf8)!
+        guard let periphCharacteristic = self.peripheralCharacteristic,
               let central = self.central else {
             log.info("No known peripherals, cancelling send")
             return
         }
-        peripheralManager.updateValue(msgData, for: characteristic, onSubscribedCentrals: [central])
+        peripheralManager.updateValue(msgData, for: periphCharacteristic, onSubscribedCentrals: [central])
+        log.info("sent to central: \(central.identifier)")
     }
     
     // return my own UUIDString
@@ -111,6 +129,8 @@ extension DocksDevice : CBCentralManagerDelegate {
         
         // Add the connected peripheral to list of connected devices
         self.connectedPeripherals.append(peripheral)
+        
+        self.peripheral = peripheral
     }
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
