@@ -219,7 +219,9 @@ extension DocksDevice : CBPeripheralDelegate {
         let msg = String(decoding: data, as: UTF8.self)
         log.info("Received message \"\(msg)\", calling callback function")
         // call callback on msg
-        recv_callback(msg)
+        DispatchQueue.main.async {
+            self.recv_callback(msg)
+        }
     }
     
 }

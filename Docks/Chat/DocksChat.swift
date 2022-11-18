@@ -17,7 +17,7 @@ struct UIChatMessage : Identifiable {
     // flag denoting that this message was sent by my user
     var my_message : Bool
     var timestamp : NSDate
-    var id: String {contents}
+    var id: String {nickname + String(timestamp.timeIntervalSince1970)}
 }
 
 /**
@@ -101,18 +101,18 @@ class DocksChat : NSObject, ObservableObject {
     }
     
     func receiveMessage(networkMessage: String) {
-        let networkMessage = NetworkChatMessage.from_network_format(packet: networkMessage)
-        let uiMessage = UIChatMessage(
-            contents: networkMessage.contents,
-            nickname: networkMessage.nickname,
-            my_message: networkMessage.SenderUID == myUUID,
-            timestamp: NSDate(timeIntervalSince1970: networkMessage.timestamp)
-        )
-        
-        if (addMessageIfUnseen(SenderUID: networkMessage.SenderUID, timestamp: networkMessage.timestamp)) {
-            deviceManager.send(msg: networkMessage.to_network_format())
-            messages.append(uiMessage)
-        }
-    }
+          let parsedNetworkMessage = NetworkChatMessage.from_network_format(packet: networkMessage)
+          let uiMessage = UIChatMessage(
+              contents: parsedNetworkMessage.contents,
+              nickname: parsedNetworkMessage.nickname,
+              my_message: parsedNetworkMessage.SenderUID == myUUID,
+              timestamp: NSDate(timeIntervalSince1970: parsedNetworkMessage.timestamp)
+          )
+          
+          if (addMessageIfUnseen(SenderUID: parsedNetworkMessage.SenderUID, timestamp: parsedNetworkMessage.timestamp)) {
+              deviceManager.send(msg: networkMessage)
+              messages.append(uiMessage)
+          }
+      }
     
 }
