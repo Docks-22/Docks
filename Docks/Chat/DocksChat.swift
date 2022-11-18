@@ -17,7 +17,7 @@ struct UIChatMessage : Identifiable {
     // flag denoting that this message was sent by my user
     var my_message : Bool
     var timestamp : NSDate
-    var id: String {nickname + String(timestamp.timeIntervalSince1970)}
+    var id: String {UUID().uuidString}
 }
 
 /**
