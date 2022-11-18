@@ -3,6 +3,6 @@
 <plist version="1.0">
 <dict>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>We communicate over bluetooth</string>
+	<string>Dock uses Bluetooth for offline communication without the internet.</string>
 </dict>
 </plist>

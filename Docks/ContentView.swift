@@ -16,15 +16,24 @@ struct ContentView: View {
     var chatWindow : some View {
         List {
             ForEach(Chat.messages.reversed()) { message in
-                Text(message.contents)
-                    .padding(5)
-                    .padding(.leading, 5)
-                    .padding(.trailing, 5)
-                    .background(message.my_message ? Color.blue : Color.secondary)
-                    .cornerRadius(10)
-                    .frame(maxWidth: .infinity, alignment: message.my_message ? .trailing : .leading)
-                    .rotationEffect(.radians(.pi))
-                    .scaleEffect(x: -1, y: 1, anchor: .center)
+                VStack{
+                    Text(message.nickname)
+                        .frame(maxWidth: .infinity, alignment: message.my_message ? .trailing : .leading)
+                        .font(.footnote)
+                        .padding(.bottom, -5)
+                        .foregroundColor(Color.gray)
+                    Text(message.contents)
+                        .padding(5)
+                        .padding(.leading, 5)
+                        .padding(.trailing, 5)
+                        .background(message.my_message ? Color.blue : Color.gray)
+                        .foregroundColor(Color.white)
+                        .cornerRadius(10)
+                        .frame(maxWidth: .infinity, alignment: message.my_message ? .trailing : .leading)
+                }
+                .rotationEffect(.radians(.pi))
+                .scaleEffect(x: -1, y: 1, anchor: .center)
+                
             }
         }
         .rotationEffect(.radians(.pi))
@@ -52,7 +61,12 @@ struct ContentView: View {
         
     func sendMessage() {
         if (chatInput != "") {
-            Chat.sendMessage(contents: chatInput)
+            if (chatInput.hasPrefix("/nick ")) {
+                // set nickname
+                Chat.verifyAndSetNickname(nickname: String(chatInput.dropFirst(6)))
+            } else {
+                Chat.sendMessage(contents: chatInput)
+            }
         }
         
         // reset chat input
