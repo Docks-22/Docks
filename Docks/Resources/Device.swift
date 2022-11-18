@@ -18,20 +18,19 @@ class DocksDevice : NSObject, ObservableObject {
     private let queue: DispatchQueue
     private let id = UUID().uuidString
     private let log = Logger()
-    private var connectedPeripherals: [CBPeripheral]
     private var recv_callback : (String) -> Void
     
     // Central variables
     // TODO: make array
-    private var centralCharacteristic: CBCharacteristic?
+    private var centralCharacteristicMap: Dictionary<UUID, CBCharacteristic>
     // reference to the peripheral we are connected to (if central)
-    private var peripheral: CBPeripheral?
+    private var peripherals: [CBPeripheral]
     
     // Peripheral variables
     // TODO: make array
     private var peripheralCharacteristic: CBMutableCharacteristic?
     // reference to central we are connected to (if peripheral)
-    private var central: CBCentral?
+    private var centrals: [CBCentral]
     
     override init() {
         queue = DispatchQueue(label: "bluetooth-discovery",
@@ -39,7 +38,9 @@ class DocksDevice : NSObject, ObservableObject {
                                               autoreleaseFrequency: .workItem, target: nil)
         centralManager = CBCentralManager(delegate: nil, queue: queue)
         peripheralManager = CBPeripheralManager(delegate: nil, queue: queue)
-        connectedPeripherals = []
+        peripherals = []
+        centralCharacteristicMap = [:]
+        centrals = []
         recv_callback = { _ in return} // default callback is a no-op
         super.init()
         
@@ -56,25 +57,27 @@ class DocksDevice : NSObject, ObservableObject {
     public func sendAsCentral(msg: String) {
         log.info("Sending message as central \"\(msg)\"")
         let msgData = msg.data(using: .utf8)!
-        guard let centralCharacteristic = self.centralCharacteristic,
-              let peripheral = self.peripheral else {
-            log.info("No known peripherals, cancelling send")
-            return
+
+        peripherals.forEach { peripheral in
+            let centralCharacteristic = centralCharacteristicMap[peripheral.identifier]!
+            peripheral.writeValue(msgData, for: centralCharacteristic, type:.withResponse)
+            log.info("sent to peripheral: \(peripheral.identifier)")
         }
-        peripheral.writeValue(msgData, for: centralCharacteristic, type:.withResponse)
-        log.info("sent to peripheral: \(peripheral.identifier)")
+        
     }
     
     public func sendAsPeripheral(msg: String) {
         log.info("Sending message as peripheral \"\(msg)\"")
         let msgData = msg.data(using: .utf8)!
-        guard let periphCharacteristic = self.peripheralCharacteristic,
-              let central = self.central else {
+        guard let periphCharacteristic = self.peripheralCharacteristic else {
             log.info("No known peripherals, cancelling send")
             return
         }
-        peripheralManager.updateValue(msgData, for: periphCharacteristic, onSubscribedCentrals: [central])
-        log.info("sent to central: \(central.identifier)")
+        
+        peripheralManager.updateValue(msgData, for: periphCharacteristic, onSubscribedCentrals: centrals)
+        centrals.forEach{ central in
+            log.info("sent to centrals: \(central.identifier)")
+        }
     }
     
     // return my own UUIDString
@@ -117,7 +120,7 @@ extension DocksDevice : CBCentralManagerDelegate {
             name = deviceName
         }
         
-        for periph in connectedPeripherals {
+        for periph in peripherals {
             // already connected to peripheral
             if (periph.identifier == peripheral.identifier) {
                 return
@@ -128,9 +131,8 @@ extension DocksDevice : CBCentralManagerDelegate {
         centralManager.connect(peripheral, options: nil)
         
         // Add the connected peripheral to list of connected devices
-        self.connectedPeripherals.append(peripheral)
+        self.peripherals.append(peripheral)
         
-        self.peripheral = peripheral
     }
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
@@ -173,7 +175,7 @@ extension DocksDevice : CBPeripheralManagerDelegate {
     }
     
     func peripheralManager(_ peripheral: CBPeripheralManager, central: CBCentral, didSubscribeTo characteristic: CBCharacteristic) {
-        self.central = central
+        self.centrals.append(central)
     }
 }
 
@@ -203,7 +205,7 @@ extension DocksDevice : CBPeripheralDelegate {
             peripheral.setNotifyValue(true, for: characteristic)
             
             // Keep a reference to the characteristic for sending data
-            self.centralCharacteristic = characteristic
+            self.centralCharacteristicMap[peripheral.identifier] = characteristic
         }
     }
     
