@@ -1,0 +1,608 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		ACDB15C029418A490016435B /* TextEditorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDB15BF29418A490016435B /* TextEditorApp.swift */; };
+		ACDB15C229418A490016435B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDB15C129418A490016435B /* ContentView.swift */; };
+		ACDB15C429418A4B0016435B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACDB15C329418A4B0016435B /* Assets.xcassets */; };
+		ACDB15C729418A4B0016435B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACDB15C629418A4B0016435B /* Preview Assets.xcassets */; };
+		ACDB15D229418A4B0016435B /* TextEditorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDB15D129418A4B0016435B /* TextEditorTests.swift */; };
+		ACDB15DC29418A4B0016435B /* TextEditorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDB15DB29418A4B0016435B /* TextEditorUITests.swift */; };
+		ACDB15DE29418A4B0016435B /* TextEditorUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDB15DD29418A4B0016435B /* TextEditorUITestsLaunchTests.swift */; };
+		ACDB15EC294192CC0016435B /* CodeEditor in Frameworks */ = {isa = PBXBuildFile; productRef = ACDB15EB294192CC0016435B /* CodeEditor */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		ACDB15CE29418A4B0016435B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ACDB15B429418A480016435B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ACDB15BB29418A480016435B;
+			remoteInfo = TextEditor;
+		};
+		ACDB15D829418A4B0016435B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ACDB15B429418A480016435B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ACDB15BB29418A480016435B;
+			remoteInfo = TextEditor;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		ACDB15BC29418A480016435B /* TextEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TextEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ACDB15BF29418A490016435B /* TextEditorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorApp.swift; sourceTree = "<group>"; };
+		ACDB15C129418A490016435B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		ACDB15C329418A4B0016435B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		ACDB15C629418A4B0016435B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		ACDB15C829418A4B0016435B /* TextEditor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TextEditor.entitlements; sourceTree = "<group>"; };
+		ACDB15CD29418A4B0016435B /* TextEditorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TextEditorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		ACDB15D129418A4B0016435B /* TextEditorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorTests.swift; sourceTree = "<group>"; };
+		ACDB15D729418A4B0016435B /* TextEditorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TextEditorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		ACDB15DB29418A4B0016435B /* TextEditorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorUITests.swift; sourceTree = "<group>"; };
+		ACDB15DD29418A4B0016435B /* TextEditorUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		ACDB15B929418A480016435B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ACDB15EC294192CC0016435B /* CodeEditor in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ACDB15CA29418A4B0016435B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ACDB15D429418A4B0016435B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		ACDB15B329418A480016435B = {
+			isa = PBXGroup;
+			children = (
+				ACDB15BE29418A480016435B /* TextEditor */,
+				ACDB15D029418A4B0016435B /* TextEditorTests */,
+				ACDB15DA29418A4B0016435B /* TextEditorUITests */,
+				ACDB15BD29418A480016435B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		ACDB15BD29418A480016435B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ACDB15BC29418A480016435B /* TextEditor.app */,
+				ACDB15CD29418A4B0016435B /* TextEditorTests.xctest */,
+				ACDB15D729418A4B0016435B /* TextEditorUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		ACDB15BE29418A480016435B /* TextEditor */ = {
+			isa = PBXGroup;
+			children = (
+				ACDB15BF29418A490016435B /* TextEditorApp.swift */,
+				ACDB15C129418A490016435B /* ContentView.swift */,
+				ACDB15C329418A4B0016435B /* Assets.xcassets */,
+				ACDB15C829418A4B0016435B /* TextEditor.entitlements */,
+				ACDB15C529418A4B0016435B /* Preview Content */,
+			);
+			path = TextEditor;
+			sourceTree = "<group>";
+		};
+		ACDB15C529418A4B0016435B /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				ACDB15C629418A4B0016435B /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		ACDB15D029418A4B0016435B /* TextEditorTests */ = {
+			isa = PBXGroup;
+			children = (
+				ACDB15D129418A4B0016435B /* TextEditorTests.swift */,
+			);
+			path = TextEditorTests;
+			sourceTree = "<group>";
+		};
+		ACDB15DA29418A4B0016435B /* TextEditorUITests */ = {
+			isa = PBXGroup;
+			children = (
+				ACDB15DB29418A4B0016435B /* TextEditorUITests.swift */,
+				ACDB15DD29418A4B0016435B /* TextEditorUITestsLaunchTests.swift */,
+			);
+			path = TextEditorUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		ACDB15BB29418A480016435B /* TextEditor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ACDB15E129418A4B0016435B /* Build configuration list for PBXNativeTarget "TextEditor" */;
+			buildPhases = (
+				ACDB15B829418A480016435B /* Sources */,
+				ACDB15B929418A480016435B /* Frameworks */,
+				ACDB15BA29418A480016435B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TextEditor;
+			packageProductDependencies = (
+				ACDB15EB294192CC0016435B /* CodeEditor */,
+			);
+			productName = TextEditor;
+			productReference = ACDB15BC29418A480016435B /* TextEditor.app */;
+			productType = "com.apple.product-type.application";
+		};
+		ACDB15CC29418A4B0016435B /* TextEditorTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ACDB15E429418A4B0016435B /* Build configuration list for PBXNativeTarget "TextEditorTests" */;
+			buildPhases = (
+				ACDB15C929418A4B0016435B /* Sources */,
+				ACDB15CA29418A4B0016435B /* Frameworks */,
+				ACDB15CB29418A4B0016435B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ACDB15CF29418A4B0016435B /* PBXTargetDependency */,
+			);
+			name = TextEditorTests;
+			productName = TextEditorTests;
+			productReference = ACDB15CD29418A4B0016435B /* TextEditorTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		ACDB15D629418A4B0016435B /* TextEditorUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ACDB15E729418A4B0016435B /* Build configuration list for PBXNativeTarget "TextEditorUITests" */;
+			buildPhases = (
+				ACDB15D329418A4B0016435B /* Sources */,
+				ACDB15D429418A4B0016435B /* Frameworks */,
+				ACDB15D529418A4B0016435B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ACDB15D929418A4B0016435B /* PBXTargetDependency */,
+			);
+			name = TextEditorUITests;
+			productName = TextEditorUITests;
+			productReference = ACDB15D729418A4B0016435B /* TextEditorUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		ACDB15B429418A480016435B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1410;
+				LastUpgradeCheck = 1410;
+				TargetAttributes = {
+					ACDB15BB29418A480016435B = {
+						CreatedOnToolsVersion = 14.1;
+					};
+					ACDB15CC29418A4B0016435B = {
+						CreatedOnToolsVersion = 14.1;
+						TestTargetID = ACDB15BB29418A480016435B;
+					};
+					ACDB15D629418A4B0016435B = {
+						CreatedOnToolsVersion = 14.1;
+						TestTargetID = ACDB15BB29418A480016435B;
+					};
+				};
+			};
+			buildConfigurationList = ACDB15B729418A480016435B /* Build configuration list for PBXProject "TextEditor" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = ACDB15B329418A480016435B;
+			packageReferences = (
+				ACDB15EA294192CC0016435B /* XCRemoteSwiftPackageReference "CodeEditor" */,
+			);
+			productRefGroup = ACDB15BD29418A480016435B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				ACDB15BB29418A480016435B /* TextEditor */,
+				ACDB15CC29418A4B0016435B /* TextEditorTests */,
+				ACDB15D629418A4B0016435B /* TextEditorUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		ACDB15BA29418A480016435B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ACDB15C729418A4B0016435B /* Preview Assets.xcassets in Resources */,
+				ACDB15C429418A4B0016435B /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ACDB15CB29418A4B0016435B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ACDB15D529418A4B0016435B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		ACDB15B829418A480016435B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ACDB15C229418A490016435B /* ContentView.swift in Sources */,
+				ACDB15C029418A490016435B /* TextEditorApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ACDB15C929418A4B0016435B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ACDB15D229418A4B0016435B /* TextEditorTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ACDB15D329418A4B0016435B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ACDB15DE29418A4B0016435B /* TextEditorUITestsLaunchTests.swift in Sources */,
+				ACDB15DC29418A4B0016435B /* TextEditorUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		ACDB15CF29418A4B0016435B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ACDB15BB29418A480016435B /* TextEditor */;
+			targetProxy = ACDB15CE29418A4B0016435B /* PBXContainerItemProxy */;
+		};
+		ACDB15D929418A4B0016435B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ACDB15BB29418A480016435B /* TextEditor */;
+			targetProxy = ACDB15D829418A4B0016435B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		ACDB15DF29418A4B0016435B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.6;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		ACDB15E029418A4B0016435B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.6;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		ACDB15E229418A4B0016435B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = TextEditor/TextEditor.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"TextEditor/Preview Content\"";
+				DEVELOPMENT_TEAM = F79QU79Y97;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = MC.TextEditor;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		ACDB15E329418A4B0016435B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = TextEditor/TextEditor.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"TextEditor/Preview Content\"";
+				DEVELOPMENT_TEAM = F79QU79Y97;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = MC.TextEditor;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		ACDB15E529418A4B0016435B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F79QU79Y97;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = MC.TextEditorTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TextEditor.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TextEditor";
+			};
+			name = Debug;
+		};
+		ACDB15E629418A4B0016435B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F79QU79Y97;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = MC.TextEditorTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TextEditor.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TextEditor";
+			};
+			name = Release;
+		};
+		ACDB15E829418A4B0016435B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F79QU79Y97;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = MC.TextEditorUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = TextEditor;
+			};
+			name = Debug;
+		};
+		ACDB15E929418A4B0016435B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F79QU79Y97;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = MC.TextEditorUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = TextEditor;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		ACDB15B729418A480016435B /* Build configuration list for PBXProject "TextEditor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ACDB15DF29418A4B0016435B /* Debug */,
+				ACDB15E029418A4B0016435B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ACDB15E129418A4B0016435B /* Build configuration list for PBXNativeTarget "TextEditor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ACDB15E229418A4B0016435B /* Debug */,
+				ACDB15E329418A4B0016435B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ACDB15E429418A4B0016435B /* Build configuration list for PBXNativeTarget "TextEditorTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ACDB15E529418A4B0016435B /* Debug */,
+				ACDB15E629418A4B0016435B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ACDB15E729418A4B0016435B /* Build configuration list for PBXNativeTarget "TextEditorUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ACDB15E829418A4B0016435B /* Debug */,
+				ACDB15E929418A4B0016435B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		ACDB15EA294192CC0016435B /* XCRemoteSwiftPackageReference "CodeEditor" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ZeeZide/CodeEditor.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		ACDB15EB294192CC0016435B /* CodeEditor */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = ACDB15EA294192CC0016435B /* XCRemoteSwiftPackageReference "CodeEditor" */;
+			productName = CodeEditor;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = ACDB15B429418A480016435B /* Project object */;
+}
