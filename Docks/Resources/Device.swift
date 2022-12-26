@@ -11,6 +11,8 @@ import os
 
 
 let chatServiceID = CBUUID(string: "8F383A98-E5B4-44F2-BDC4-E9A41A79D9DF")
+let MAX_PERIPHERALS = 5
+let MAX_CENTRALS = 10
 
 class DocksDevice : NSObject, ObservableObject {
     private let centralManager: CBCentralManager
@@ -21,15 +23,13 @@ class DocksDevice : NSObject, ObservableObject {
     private var recv_callback : (String) -> Void
     
     // Central variables
-    // TODO: make array
     private var centralCharacteristicMap: Dictionary<UUID, CBCharacteristic>
-    // reference to the peripheral we are connected to (if central)
+    // reference to the peripherals we are connected to (if central)
     private var peripherals: [CBPeripheral]
     
     // Peripheral variables
-    // TODO: make array
     private var peripheralCharacteristic: CBMutableCharacteristic?
-    // reference to central we are connected to (if peripheral)
+    // reference to centrals we are connected to (if peripheral)
     private var centrals: [CBCentral]
     
     override init() {
@@ -98,28 +98,20 @@ class DocksDevice : NSObject, ObservableObject {
 extension DocksDevice : CBCentralManagerDelegate {
     // Called when the Bluetooth central state changes
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
+
         guard central.state == .poweredOn else {
             log.error("Unable to start scanning, not powered on")
             return
         }
-        
         log.info("Beginning to scan for peripherals")
         // Start scanning for peripherals
-        centralManager.scanForPeripherals(withServices: [CBUUID(string: "8F383A98-E5B4-44F2-BDC4-E9A41A79D9DF")],
+        centralManager.scanForPeripherals(withServices: [chatServiceID],
                                           options: [CBCentralManagerScanOptionAllowDuplicatesKey: false])
     }
 
     // Called when a peripheral is detected
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral,
                         advertisementData: [String: Any], rssi RSSI: NSNumber) {
-        // Get the string value of the UUID of this device as the default value
-        var name = peripheral.identifier.description
-
-        // Attempt to get the user-set device name of this peripheral
-        if let deviceName = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
-            name = deviceName
-        }
-        
         for periph in peripherals {
             // already connected to peripheral
             if (periph.identifier == peripheral.identifier) {
@@ -133,10 +125,16 @@ extension DocksDevice : CBCentralManagerDelegate {
         // Add the connected peripheral to list of connected devices
         self.peripherals.append(peripheral)
         
+        // Stop advertising if connected to too many machines
+        if (peripherals.count == MAX_PERIPHERALS) {
+            log.info("Maximum connections reached as Central, stopping scan")
+            centralManager.stopScan();
+        }
     }
     
+    // called on connection
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        var name = peripheral.identifier
+        let name = peripheral.identifier
         log.info("connected to \(name)")
         
         // Configure a delegate for the peripheral
@@ -145,6 +143,21 @@ extension DocksDevice : CBCentralManagerDelegate {
         // Scan for peripheral's characteristics
         peripheral.discoverServices([chatServiceID])
         
+    }
+    
+    // called on disconnection
+    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+        log.info("Disconnected from peripheral \(peripheral.identifier)")
+        self.peripherals.removeAll(where: { p in
+            return p.identifier == peripheral.identifier
+        })
+        
+        if (peripherals.count == MAX_PERIPHERALS - 1) {
+            log.info("Restarting scan")
+            centralManager.scanForPeripherals(withServices: [CBUUID(string: "8F383A98-E5B4-44F2-BDC4-E9A41A79D9DF")],
+                                              options: [CBCentralManagerScanOptionAllowDuplicatesKey: false])
+        }
+
     }
 }
 
@@ -170,18 +183,39 @@ extension DocksDevice : CBPeripheralManagerDelegate {
         peripheralManager.add(service)
         
         log.info("Starting to advertise as peripheral")
-        peripheralManager.startAdvertising([CBAdvertisementDataServiceUUIDsKey:[CBUUID(string: "8F383A98-E5B4-44F2-BDC4-E9A41A79D9DF")],
+        peripheralManager.startAdvertising([CBAdvertisementDataServiceUUIDsKey:[chatServiceID],
                                             CBAdvertisementDataLocalNameKey: id])
     }
     
+    // on subscription
     func peripheralManager(_ peripheral: CBPeripheralManager, central: CBCentral, didSubscribeTo characteristic: CBCharacteristic) {
         self.centrals.append(central)
+        // if too many centrals, stop searching
+        if (self.centrals.count == MAX_CENTRALS) {
+            log.info("Maximum connections reached as peripheral, stopping advertising")
+            peripheralManager.stopAdvertising();
+        }
+
     }
+    
+    // on unsubscription
+    func peripheralManager(_ peripheral: CBPeripheralManager, central: CBCentral, didUnsubscribeFrom characteristic: CBCharacteristic) {
+        
+        self.centrals.removeAll(where: { c in
+            c.identifier == central.identifier
+        })
+        
+        if (self.centrals.count == MAX_CENTRALS - 1) {
+            log.info("Restarting advertising")
+            peripheralManager.startAdvertising([CBAdvertisementDataServiceUUIDsKey:[chatServiceID],
+                                                CBAdvertisementDataLocalNameKey: id])
+        }
+
+    }
+    
 }
 
 extension DocksDevice : CBPeripheralDelegate {
-    // todo: cleanup()
-    
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         if let error = error {
             log.error("Unable to discover service: \(error.localizedDescription)")
